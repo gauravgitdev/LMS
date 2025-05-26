@@ -7,3 +7,6 @@ class Video(models.Model):
     serial_number = models.IntegerField(null = False)
     video_id = models.CharField(max_length = 100, null = False) 
     ispreview = models.BooleanField(default = False)
+
+    def __str__(self):
+        return f"{self.title} - {self.course.name}"

@@ -1,5 +1,7 @@
 from django.contrib import admin
-from django.shortcuts import HttpResponse
+from courses.models import Course
+from django.shortcuts import HttpResponse,render
 
 def home(request):
-    return HttpResponse("home page")
+    courses = Course.objects.all()
+    return render(request, "courses/home.html" , context={"courses": courses})
