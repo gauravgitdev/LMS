@@ -1,0 +1,80 @@
+{% extends 'courses/base.html' %}
+{% load course_custom_tags %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+<br />
+<div class="container-fluid">
+  <div class="row">
+    <!-- Video Display Column -->
+    <div class="col-md-9 mb-4">
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe
+          class="embed-responsive-item"
+          width="100%"
+          height="400"
+          src="https://www.youtube.com/embed/jMHcborMf0Q?si=sTPutF2yrWaypfcZ"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Sidebar Video List -->
+    <div class="col-md-3 mb-4">
+      <h5 class="mb-3">Video Lessons</h5>
+      <ul class="list-group">
+        {% for video in course.video_set.all %}
+          <li class="list-group-item">
+            <a href="#" class="text-decoration-none">{{ video }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Course Details -->
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title">{{ course.name }}</h5>
+          <p class="card-text">{{ course.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prerequisites -->
+    <div class="col-md-12 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title">Prerequisites</h5>
+          <ol class="card-text">
+            {% for pre in course.prerequisite_set.all %}
+              <li>{{ pre.description }}</li>
+            {% endfor %}
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Outcomes -->
+    <div class="col-md-12 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title">What You’ll Learn</h5>
+          <ol class="card-text">
+            {% for l in course.learning_set.all %}
+              <li>{{ l.description }}</li>
+            {% endfor %}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
