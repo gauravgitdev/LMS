@@ -4,7 +4,7 @@ from django.shortcuts import HttpResponse
 from courses.views import home, coursepage
 from django.conf.urls.static import static
 from skillNest import settings
-
+from django.conf import settings
 # from skillNest.settings import MEDIA_URL, MEDIA_ROOT
 
 
@@ -14,3 +14,7 @@ urlpatterns = [
     path('course/<str:slug>', coursepage , name='coursepage'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
