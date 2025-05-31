@@ -1,9 +1,17 @@
 {% extends 'courses/base.html' %}
+{% load static %}
 {% load course_custom_tags %}
 
 {% block title %}Courses{% endblock %}
 
 {% block content %}
+
+{% comment %} <style>
+  #video-list {
+  
+    overflow-y: scroll;
+  }
+</style> {% endcomment %}
 <br />
 <div class="container-fluid">
   <div class="row">
@@ -11,6 +19,7 @@
     <div class="col-md-9 mb-4">
       <div class="embed-responsive embed-responsive-16by9">
         <iframe
+          id="player"
           class="embed-responsive-item"
           width="100%"
           height="400"
@@ -21,13 +30,13 @@
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
         ></iframe>
-      </div>
+      </div> 
     </div>
 
     <!-- Sidebar Video List -->
     <div class="col-md-3 mb-4">
       <h5 class="mb-3">Video Lessons</h5>
-      <ul class="list-group">
+      <ul id="video-list" style="overflow-y: scroll; "class="list-group">
         {% for video in course.video_set.all %}
           <li class="list-group-item">
             <a href="#" class="text-decoration-none">{{ video }}</a>
@@ -77,4 +86,7 @@
     </div>
   </div>
 </div>
+<script src="{% static 'courses/js/course_page.js'%}"></script>
+
+</script>
 {% endblock %}
