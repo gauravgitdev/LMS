@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path,include
 from django.shortcuts import HttpResponse
-from courses.views import home, coursepage
+from courses.views import home, coursepage,SignupView,Loginview
 from django.conf.urls.static import static
 from skillNest import settings
 from django.conf import settings
@@ -12,7 +12,8 @@ from django.conf import settings
 urlpatterns = [
     path('', home , name='home'),
     path('course/<str:slug>', coursepage , name='coursepage'),
-
+    path('signup', SignupView.as_view() , name='signup'),
+    path('login', Loginview.as_view() , name='login'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
