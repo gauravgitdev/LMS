@@ -1,0 +1,14 @@
+.active-video {
+  background-color: #dbeafe !important; /* light blue background */
+  font-weight: bold;
+  border-left: 5px solid #2563eb; /* blue border */
+  color: #1e3a8a;
+}
+
+.list-group-item:hover {
+  background-color: #f3f4f6;
+   /* subtle gray on hover */
+    color: #1e3a8a; /* dark blue text */
+    font-weight: bold; /* bold text on hover */
+    
+}

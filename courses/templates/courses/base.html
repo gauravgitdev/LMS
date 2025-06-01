@@ -15,6 +15,9 @@
     />
 
     <title>{% block title %} {% endblock %}</title>
+    {% block css %}
+    
+    {% endblock %}
   </head>
   <body>
     <div>
@@ -44,16 +47,18 @@
           </ul>
 
           <ul class="navbar-nav ml-auto">
-            
-            <li class="nav-item">
-              <a class="nav-link" href="#">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">signup</a>
-            </li>
-            <li class="nav-item">
+            {% if request.user.is_authenticated %}
+              <li class="nav-item">
               <a class="nav-link" href="#">Logout</a>
             </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signup">signup</a>
+            </li>
+            {% endif %}
           </ul>
         </div>
       </nav>
@@ -77,5 +82,7 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    {% block js %}
+    {% endblock %}
   </body>
 </html>
