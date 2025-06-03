@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -117,7 +117,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR 
+MEDIA_ROOT = BASE_DIR
+
+import razorpay
+
+KEY_ID = config("KEY_ID")
+KEY_SECRET = config("KEY_SECRET")
+
+client = razorpay.Client(auth=(KEY_ID, KEY_SECRET))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

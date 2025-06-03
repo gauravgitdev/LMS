@@ -1,5 +1,5 @@
 from django.contrib import admin
-from courses.models import Course , Learning , Tag , Prerequisite
+from courses.models import Course ,UserCourse, Payment, Learning , Tag , Prerequisite
 from courses.models import Video
 # Inline admin to show Tag entries inside the Course admin page
 class TagMode(admin.TabularInline):
@@ -18,10 +18,10 @@ class CourseAdmin(admin.ModelAdmin):
     inlines = [TagMode, PrerequisiteAdmin, LearningAdmin,VideoAdmin]
 # Register the Course model with the customized admin
 admin.site.register(Course, CourseAdmin)
-
-
-
 admin.site.register(Video)
+admin.site.register(UserCourse)
+admin.site.register(Payment)
+
 
 
 

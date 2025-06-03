@@ -1,0 +1,89 @@
+{% extends 'courses/base.html' %}
+{% load static %}
+{% load course_custom_tags %}
+
+{% block title %}Checkout Page{% endblock %}
+
+{% block content %}
+<br>
+
+<div class="container py-4">
+  <div class="row justify-content-center align-items-start g-4">
+
+    <!-- Course Card (Left Column) -->
+    <div class="col-lg-5 col-md-6">
+      <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <img src="{{ course.thumbnails.url }}" class="card-img-top img-fluid" alt="{{ course.name }}">
+        <div class="card-body bg-light">
+          <h5 class="card-title text-primary fw-bold">{{ course.name }}</h5>
+          <p class="card-text mb-2">
+            <span class="bg-secondary-subtle text-dark rounded large ">Save {{ course.discount }}%</span>
+          </p>
+          <p class="mb-0">
+            <span class="text-muted"><del>{{ course.price|rupee }}</del></span>
+            <span class="text-success fw-bold fs-4 ms-2">
+              {% cal_sellprice course.price course.discount as value %}
+              {{ value|rupee }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkout Details (Right Column) -->
+    <div class="col-lg-7 col-md-6">
+      <div class="bg-white p-4 shadow-lg rounded-4 h-100 d-flex flex-column justify-content-center">
+        <h3 class="mb-4 text-dark fw-bold">Complete Your Purchase</h3>
+        
+        <ul class="list-group list-group-flush mb-4">
+          <li class="list-group-item bg-transparent border-0 ps-0">
+            <strong>Course:</strong> {{ course.name }}
+          </li>
+          <li class="list-group-item bg-transparent border-0 ps-0">
+            <strong>Payable Amount:</strong>
+            <span class="text-success fs-5 fw-bold">{{ value|rupee }}</span>
+          </li>
+        </ul>
+
+        <!-- Payment Button -->
+        <a href="?action=create_payment" class="btn btn-success btn-lg w-100 d-flex align-items-center justify-content-center gap-2 rounded-pill">
+          <i class="bi bi-credit-card-fill"></i>
+          Pay Now
+        </a>
+
+        <p class="text-muted mt-3 text-center small">
+          <i class="bi bi-shield-lock-fill me-1"></i>
+          Secure payment powered by <span class="text-dark fw-semibold">Razorpay</span>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% if order %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "rzp_test_Bs8MXrA5Y2TbLl",  // Replace with your live key in production
+        "amount": {{ order.amount }},  // in paise
+        "currency": "{{ order.currency }}",
+        "name": "skillNest",
+        "description": "Payment for {{ course.name }}",
+        "image": "{{ course.thumbnails.url }}",
+        "order_id": "{{ order.id }}",  // Razorpay Order ID
+        "callback_url": "http://127.0.0.1:8000/verify-payment/",  // Ensure this URL exists in your Django urls.py
+        "prefill": {
+            "name": "{{ request.user.first_name }} {{ request.user.last_name }}",
+            "email": "{{ request.user.email }}"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+</script>
+{% endif %}
+
+{% endblock %}
