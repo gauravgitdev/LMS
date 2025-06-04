@@ -3,56 +3,105 @@
 {% block title %} Courses {% endblock %} 
 {% block content %}
 <style>
+  .course-card {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .course-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-img-top {
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .card-body {
+    padding: 1.2rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212529;
+  }
+
+  .discount-badge {
+    background-color: #dc3545;
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
   .price {
-    font-size: 1.5rem;
-    color: red;
-  } 
-.real-price {
-    font-size: 1.5rem;
-    color: green;
+    color: #6c757d;
+    font-size: 1rem;
   }
-  .card {
-    margin-bottom: 20px;
+
+  .real-price {
+    color: #28a745;
+    font-weight: 600;
+    font-size: 1.2rem;
   }
-  .card-footer {
+
+  .btn-custom {
+    background-color: #0d6efd;
+    color: white;
+    font-weight: 500;
+    border: none;
+    transition: 0.2s;
+  }
+
+  .btn-custom:hover {
+    background-color: #084298;
+  }
+
+  .btn-light-custom {
     background-color: #f8f9fa;
+    color: #212529;
+    border: 1px solid #dee2e6;
   }
-  .btn.light {
-    background-color: #f8f9fa;
-    color:rgb(9, 17, 24);
+
+  .btn-light-custom:hover {
+    background-color: #e2e6ea;
   }
 </style>
-<div class="container-fluid">
-  <br />
-  <div class="row">
-    {% for course in courses %}
-    <div class="col mx-auto">
-      <div class="card mx-auto" style="width: 18rem">
-        <img
-          src="{{course.thumbnails.url}}"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <h5 class="card-title">{{course.name}}</h5>
-          <p class="card-text m-0 p-0">
-           Save {{course.discount}}%
-        <br>
-        <span class="price">
-             <del>{{course.price|rupee}}
-            </del>
-            &nbsp;
-        <span class="real-price"> {% cal_sellprice course.price course.discount as value %}{{value|rupee}}</span>
-            </span>
-        </p> 
-        </div>
-        <div class="card-footer p-0">
-          <div class="row no-gutters">
-           <div class="col border-right"> <a href="/check-out/{{ course.slug }}" class="btn btn light btn-block">Enroll now</a></div>
-            <div class="col"><a href="/check-out/{{course.slug}}" class="btn btn light btn-block">show more</a></div>
-           
-          </div>
 
+<div class="container py-4">
+  <div class="row g-4">
+    {% for course in courses %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+      <div class="card course-card h-100">
+        <img src="{{ course.thumbnails.url }}" class="card-img-top" alt="{{ course.name }}">
+        <div class="card-body">
+          <span class="discount-badge">Save {{ course.discount }}%</span>
+          <h5 class="card-title">{{ course.name }}</h5>
+          <p class="price mb-0">
+            <del>{{ course.price|rupee }}</del>
+          </p>
+          <p class="real-price">
+            {% cal_sellprice course.price course.discount as value %}
+            {{ value|rupee }}
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0">
+          {% is_enrolled request course as enrolled %}
+          <div class="d-grid gap-2">
+            {% if enrolled %}
+              <a href="/course/{{ course.slug }}" class="btn btn-light-custom">Start Course</a>
+            {% else %}
+              <a href="/check-out/{{ course.slug }}" class="btn btn-custom">Enroll Now</a>
+              <a href="/course/{{ course.slug }}" class="btn btn-light-custom">Show More</a>
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
