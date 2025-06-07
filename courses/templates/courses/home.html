@@ -1,6 +1,7 @@
 {% extends 'courses/base.html' %}
 {% load course_custom_tags %}
-{% block title %} Courses {% endblock %} 
+{% block title %} Courses {% endblock %}
+
 {% block content %}
 <style>
   .course-card {
@@ -73,6 +74,75 @@
   .btn-light-custom:hover {
     background-color: #e2e6ea;
   }
+
+  /* About Us Section */
+  .about-us {
+    margin-top: 4rem;
+    background-color: #f9fafb;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .about-us h2 {
+    font-size: 2.5rem;
+    color: #0d6efd;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .about-us p {
+    max-width: 900px;
+    margin: 0 auto 2rem auto;
+    font-size: 1.125rem;
+    color: #555555;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .about-us .points {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .about-us .point {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+    padding: 1.5rem 2rem;
+    width: 280px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .about-us .point:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(13, 110, 253, 0.3);
+  }
+
+  .about-us .point h3 {
+    color: #0d6efd;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+
+  .about-us .point p {
+    color: #666666;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .about-us .points {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 </style>
 
 <div class="container py-4">
@@ -108,4 +178,30 @@
     {% endfor %}
   </div>
 </div>
+
+<!-- About Us Section -->
+<section class="about-us" aria-label="About SkillNest">
+  <h2>About SkillNest</h2>
+  <p>At SkillNest, we believe in empowering learners through practical experience and guidance from industry-leading mentors. Our mission is to bridge the gap between theory and real-world skills, helping you unlock your full potential and achieve career success.</p>
+  <div class="points">
+    <div class="point">
+      <h3>Learn from Experienced Mentors</h3>
+      <p>Our mentors bring years of industry expertise to guide you step-by-step in mastering the skills that matter.</p>
+    </div>
+    <div class="point">
+      <h3>Hands-On Learning</h3>
+      <p>Engage in real projects and interactive sessions that build confidence and prepare you for the job market.</p>
+    </div>
+    <div class="point">
+      <h3>Community Support</h3>
+      <p>Join a vibrant community of learners to collaborate, share knowledge, and grow together.</p>
+    </div>
+    <div class="point">
+      <h3>Career Growth</h3>
+      <p>We focus on skills that help you land your dream job and excel in your professional journey.</p>
+    </div>
+  </div>
+</section>
+
+
 {% endblock %}
